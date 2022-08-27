@@ -49,21 +49,34 @@ async function main() {
     new Chart(highestPriceChartCanvas.getContext('2d'), {
         type: 'bar',
         data: {
-            labels: '',
+            labels: ['GME',"MSFT","DIS","BNTX"], 
             datasets: stocks.map( stock => ({
                 label: stock.meta.symbol,
-                data: stock.values.map(value => parseFloat(value.high)),
+                data: highestPrice(),
                 backgroundColor:  getColor(stock.meta.symbol),
                 borderColor: getColor(stock.meta.symbol),
             }))
         }
     });
     function highestPrice(){
-        let x = stocks[0].values[2]
-        console.log(x)
+        let argh = []
+        for(let i=0 ; i<stocks.length; i++){
+            let x = stocks[i].values.map( value => Number(value.high))
+            let y = Math.max(...x)
+            y += i
+            argh.push(y)
+        }
+        console.log(argh)
+        return argh
+         
+        
     }
+    
+    // let p = stocks[0].values.map( value => Number(value.high))
+    // h = Math.max(...p)
+    // console.log(h)
 
-    highestPrice()
 }
 
 main()
+
